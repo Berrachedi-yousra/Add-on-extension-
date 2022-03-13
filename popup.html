@@ -1,35 +1,38 @@
 <html>
-    <link rel="stylesheet" href="popup.css">
-    <head>
-        <title>Test</title>
-    </head>
-    <body>
-        <h1>Hello world!</h1>
-        <h1>GeeksforGeeks</h1>
-        <p>select some text and click on
-           button to get the range of selection</p>
+<link rel="stylesheet" href="popup.css">
+
+<head>
+    <title>Test</title>
+</head>
+
+<body>
+    <h1>Hello world!</h1>
+    <h1>GeeksforGeeks</h1>
+    <p>select some text and click on
+        button to get the range of selection</p>
 
 
-        <select name="srclanguage" id="srclnguage">
-            <option lang="en" value="english" selected>English</option>
-            <option lang="fr" value="francais">Français</option>
-            <option lang="ar" value="arabic">Arabic</option>
-            <option lang="zh" value="chinese">chinese</option>
-        </select>
+    <select name="srclanguage" id="srclnguage">
+        <option lang="en" value="english" selected>English</option>
+        <option lang="fr" value="francais">Français</option>
+        <option lang="ar" value="arabic">Arabic</option>
+        <option lang="zh" value="chinese">chinese</option>
+    </select>
 
-        <select name="dstlanguage" id="dstlnguage">
-            <option lang="en" value="english">English</option>
-            <option lang="fr" value="francais" selected>Français</option>
-            <option lang="ar" value="arabic">Arabic</option>
-            <option lang="zh" value="chinese">chinese</option>
-        </select>
+    <select name="dstlanguage" id="dstlnguage">
+        <option lang="en" value="english">English</option>
+        <option lang="fr" value="francais" selected>Français</option>
+        <option lang="ar" value="arabic">Arabic</option>
+        <option lang="zh" value="chinese">chinese</option>
+    </select>
 
 
-        <script>
-            var selected = "";
-            function translateword(){
-            selected = window.getSelection();
-            console.log(selected.toString());
+    <script>
+        var selected = "";
+        function translateword() {
+            chrome.tabs.executeScript(null, {code: "console.log(window.getSelection.toString());"})
+            console.log(selected);
+            
 
             var range = selected.getRangeAt(0);
             var X = event.pageX;
@@ -41,7 +44,7 @@
             //var rect = element.getBoundingClientRect();
             //console.log(rect.top, rect.right, rect.bottom, rect.left);
 
-            
+
             //let div = document.createElement('div');
             document.getElementById('translator').style.display = "block";
             //document.body.appendChild(div);
@@ -57,20 +60,21 @@
             icon.style.width = 25;
             icon.style.height = 25;*/
 
-            document.getElementById('translator').style.left = start+selected.toString().length + 'px';
+            document.getElementById('translator').style.left = start + selected.toString().length + 'px';
             document.getElementById('translator').style.top = end + 'px';
 
-            document.getElementById("translator").innerHTML= selected.toString();
+            document.getElementById("translator").innerHTML = selected.toString();
 
-            }
-        
-            function closediv(){
-                document.getElementById('translator').style.display = "none";
-            }
-        </script>
+        }
 
-        <button class="check" onclick="translateword()">Click</button>
-        <div id="translator" class="translator" onclick="closediv()" style="display: none;">  </div>
+        function closediv() {
+            document.getElementById('translator').style.display = "none";
+        }
+    </script>
 
-    </body>
+    <button class="check" id="translate-button">Click</button>
+    <div id="translator" class="translator" onclick="closediv()" style="display: none;"> </div>
+
+</body>
+
 </html>
